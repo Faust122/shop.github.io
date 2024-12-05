@@ -1,0 +1,362 @@
+{% extends "base.html" %}
+{% block title %}Index{% endblock %}
+
+{% block content %}
+
+
+{% endblock %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NXTS Notebooks</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+    
+        header {
+            background-color: #1e88e5;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+    
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+    
+        .auth-buttons {
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+        }
+    
+        .auth-buttons button {
+            background-color: #ffffff;
+            color: #1e88e5;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-left: 10px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+    
+        .auth-buttons button:hover {
+            background-color: #e3f2fd;
+        }
+    
+        main {
+            padding: 20px;
+        }
+    
+        h2 {
+            color: #1e88e5;
+        }
+    
+        .product {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: #fff;
+            display: flex;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+    
+        .product:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+    
+        .product img {
+            width: 200px;
+            height: auto;
+            margin-right: 20px;
+            border-radius: 10px;
+        }
+    
+        .product-info {
+            flex-grow: 1;
+        }
+    
+        .product-info h2 {
+            margin-top: 0;
+            font-size: 18px;
+        }
+    
+        .product-info p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #555;
+        }
+    
+        .product-price {
+            font-weight: bold;
+            color: #1e88e5;
+            margin: 10px 0;
+        }
+    
+        .pay-button, .cart-button {
+            background-color: #1e88e5;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: background-color 0.3s;
+        }
+    
+        .pay-button:hover, .cart-button:hover {
+            background-color: #1565c0;
+        }
+    
+        footer {
+            background-color: #1e88e5;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 20px;
+            font-size: 14px;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        }
+    
+        .store-info p {
+            margin: 5px 0;
+            font-size: 13px;
+        }
+    
+        #cart {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            width: 300px;
+            background-color: #fff;
+            color: #333;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            display: none;
+        }
+    
+        #cart h2 {
+            margin: 0 0 10px;
+        }
+    
+        #cart-items {
+            max-height: 200px;
+            overflow-y: auto;
+            padding: 10px 0;
+        }
+    
+        #cart-button {
+            background-color: #1e88e5;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+    
+        #cart-button:hover {
+            background-color: #1565c0;
+        }
+    </style>
+    
+</head>
+<body>
+    <header>
+        <h1>NXTS</h1>
+        <div class="auth-buttons">
+            <button onclick="signUp()">Sign Up</button>
+            <button onclick="login()">Login</button>
+        </div>
+    </header>
+    <main>
+        <section id="products">
+            <h2>Ноутбуки</h2>
+            <article class="product">
+                <img src="https://example.com/notebook1.jpg" alt="Ноутбук ASUS">
+                <div class="product-info">
+                    <h2>ASUS ROG Zephyrus</h2>
+                    <p>Ідеальний ноутбук для геймерів. Intel Core i7, NVIDIA RTX 3060, 16GB RAM, SSD 1TB. Легкий, стильний, потужний.</p>
+                    <p>Ціна: 45,000 грн</p>
+                    <label for="quantity-asus">Кількість:</label>
+                    <input type="number" id="quantity-asus" name="quantity-asus" value="1" min="1" max="3">
+                    <button class="pay-button" onclick="payItem('ASUS ROG Zephyrus', 'quantity-asus')">Оплатити</button>
+                    <button class="cart-button" onclick="addToCart('ASUS ROG Zephyrus', 'quantity-asus')">Додати до кошика</button>
+                </div>
+            </article>
+            <article class="product">
+                <img src="https://example.com/notebook2.jpg" alt="MacBook Pro">
+                <div class="product-info">
+                    <h2>MacBook Pro 14</h2>
+                    <p>Потужний ноутбук для роботи та творчості. Apple M2 Pro, 16GB RAM, SSD 512GB. Retina-дисплей з технологією ProMotion.</p>
+                    <p>Ціна: 70,000 грн</p>
+                    <label for="quantity-macbook">Кількість:</label>
+                    <input type="number" id="quantity-macbook" name="quantity-macbook" value="1" min="1" max="3">
+                    <button class="pay-button" onclick="payItem('MacBook Pro 14', 'quantity-macbook')">Оплатити</button>
+                    <button class="cart-button" onclick="addToCart('MacBook Pro 14', 'quantity-macbook')">Додати до кошика</button>
+                </div>
+            </article>
+            <article class="product">
+                <img src="https://example.com/notebook1.jpg" alt="Ноутбук ASUS">
+                <div class="product-info">
+                    <h2>ASUS ROG Zephyrus</h2>
+                    <p>Ідеальний ноутбук для геймерів. Intel Core i7, NVIDIA RTX 3060, 16GB RAM, SSD 1TB. Легкий, стильний, потужний.</p>
+                    <p>Ціна: 45,000 грн</p>
+                    <label for="quantity-asus">Кількість:</label>
+                    <input type="number" id="quantity-asus" name="quantity-asus" value="1" min="1" max="3">
+                    <button class="pay-button" onclick="payItem('ASUS ROG Zephyrus', 'quantity-asus')">Оплатити</button>
+                    <button class="cart-button" onclick="addToCart('ASUS ROG Zephyrus', 'quantity-asus')">Додати до кошика</button>
+                </div>
+            </article>
+            <article class="product">
+                <img src="https://example.com/notebook1.jpg" alt="Ноутбук ASUS">
+                <div class="product-info">
+                    <h2>ASUS ROG Zephyrus</h2>
+                    <p>Ідеальний ноутбук для геймерів. Intel Core i7, NVIDIA RTX 3060, 16GB RAM, SSD 1TB. Легкий, стильний, потужний.</p>
+                    <p>Ціна: 45,000 грн</p>
+                    <label for="quantity-asus">Кількість:</label>
+                    <input type="number" id="quantity-asus" name="quantity-asus" value="1" min="1" max="3">
+                    <button class="pay-button" onclick="payItem('ASUS ROG Zephyrus', 'quantity-asus')">Оплатити</button>
+                    <button class="cart-button" onclick="addToCart('ASUS ROG Zephyrus', 'quantity-asus')">Додати до кошика</button>
+                </div>
+            </article>
+            <article class="product">
+                <img src="https://example.com/notebook1.jpg" alt="Ноутбук ASUS">
+                <div class="product-info">
+                    <h2>ASUS ROG Zephyrus</h2>
+                    <p>Ідеальний ноутбук для геймерів. Intel Core i7, NVIDIA RTX 3060, 16GB RAM, SSD 1TB. Легкий, стильний, потужний.</p>
+                    <p>Ціна: 45,000 грн</p>
+                    <label for="quantity-asus">Кількість:</label>
+                    <input type="number" id="quantity-asus" name="quantity-asus" value="1" min="1" max="3">
+                    <button class="pay-button" onclick="payItem('ASUS ROG Zephyrus', 'quantity-asus')">Оплатити</button>
+                    <button class="cart-button" onclick="addToCart('ASUS ROG Zephyrus', 'quantity-asus')">Додати до кошика</button>
+                </div>
+            </article>
+        </section>
+    </main>
+    <footer>
+        <div class="store-info">
+            <p>Адреса: Соборна 22</p>
+            <p>Телефон: +380987442039</p>
+            <p>Email: semenukmaksim41@gmail.com</p>
+        </div>
+        <p>&copy; 2024 NXTS</p>
+    </footer>
+</body>
+</html>
+
+<script>
+    let cartItems = {};
+
+    function signUp() {
+        window.location.href = "/signup";
+    }
+
+    function login() {
+        window.location.href = "/login";
+    }
+
+    function addToCart(itemName, quantityInputId) {
+        const quantity = parseInt(document.getElementById(quantityInputId).value);
+        if (quantity > 3) {
+            alert("Максимальна кількість товарів для покупки - 3.");
+            return;
+        }
+        const price = getProductPrice(itemName);
+        const paymentUrl = getPaymentUrl(itemName);
+        if (cartItems[itemName]) {
+            cartItems[itemName].quantity += quantity;
+        } else {
+            cartItems[itemName] = { quantity, price, paymentUrl };
+        }
+        updateCart();
+    }
+
+    function getProductPrice(itemName) {
+        if (itemName === 'ASUS ROG Zephyrus') return 45000;
+        if (itemName === 'MacBook Pro 14') return 70000;
+        return 0;
+    }
+
+    function getPaymentUrl(itemName) {
+        if (itemName === 'ASUS ROG Zephyrus') {
+            return 'https://example.com/payment/asus';
+        }
+        if (itemName === 'MacBook Pro 14') {
+            return 'https://example.com/payment/macbook';
+        }
+        if (itemName === 'MacBook Pro 14') {
+            return 'https://example.com/payment/macbook';
+        }
+        if (itemName === 'MacBook Pro 14') {
+            return 'https://example.com/payment/macbook';
+        }
+        if (itemName === 'MacBook Pro 14') {
+            return 'https://example.com/payment/macbook';
+        }
+        return '';
+    }
+
+    function updateCart() {
+        const cartElement = document.getElementById('cart-items');
+        cartElement.innerHTML = '';
+        Object.keys(cartItems).forEach(itemName => {
+            const item = document.createElement('div');
+            const totalPrice = cartItems[itemName].quantity * cartItems[itemName].price;
+            item.textContent = `${itemName} x ${cartItems[itemName].quantity} (Ціна: ${totalPrice} грн)`;
+            cartElement.appendChild(item);
+        });
+        const cart = document.getElementById('cart');
+        if (Object.keys(cartItems).length > 0) {
+            cart.style.display = 'block';
+        } else {
+            cart.style.display = 'none';
+        }
+    }
+
+    function payItem(itemName, quantityInputId) {
+        const quantity = parseInt(document.getElementById(quantityInputId).value);
+        if (quantity > 3) {
+            alert("Максимальна кількість товарів для покупки - 3.");
+            return;
+        }
+        const totalPrice = quantity * getProductPrice(itemName);
+        const paymentUrl = getPaymentUrl(itemName);
+        const updatedUrl = `${paymentUrl}?amount=${totalPrice}&quantity=${quantity}`;
+        if (confirm(`Ви дійсно бажаєте оплатити ${itemName} у кількості ${quantity} за ${totalPrice} грн?`)) {
+            window.location.href = updatedUrl;
+        }
+    }
+
+    function payCart() {
+        const paymentUrl = 'https://example.com/cart-payment';
+        let totalAmount = 0;
+        Object.keys(cartItems).forEach(itemName => {
+            totalAmount += cartItems[itemName].quantity * cartItems[itemName].price;
+        });
+        if (totalAmount > 0) {
+            alert(`Загальна сума до оплати: ${totalAmount} грн`);
+            window.location.href = `${paymentUrl}?amount=${totalAmount}`;
+        } else {
+            alert("Ваш кошик порожній.");
+        }
+    }
+</script>
