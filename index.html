@@ -281,11 +281,11 @@
             return;
         }
         const price = getProductPrice(itemName);
-        const paymentUrl = getPaymentUrl(itemName);
+        //const paymentUrl = getPaymentUrl(itemName);
         if (cartItems[itemName]) {
             cartItems[itemName].quantity += quantity;
         } else {
-            cartItems[itemName] = { quantity, price, paymentUrl };
+            cartItems[itemName] = { quantity, price };
         }
         updateCart();
     }
